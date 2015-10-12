@@ -1,0 +1,29 @@
+{{#hasPreBodyText}}
+{{{prebodyhtml}}}
+{{/hasPreBodyText}}
+<div class="pre-content heading-holder">
+	{{^isSpecialPage}}
+	{{#hasPageActions}}
+	<ul id="page-actions" class="hlist">
+		{{{pageactionshtml}}}
+	</ul>
+	{{/hasPageActions}}
+	{{/isSpecialPage}}
+	{{{headinghtml}}}
+	{{{subtitle}}}
+	{{#_old_revision_warning}}
+	{{{_old_revision_warning}}}
+	{{/_old_revision_warning}}
+	{{{internalBanner;}}}
+</div>
+{{^unstyledContent}}
+<div id="bodyContent" class="content">
+	{{{bodytext}}}
+	{{#hasSubjectPage}}
+	{{{subject-page}}}
+	{{/hasSubjectPage}}
+</div>
+{{/unstyledContent}}
+{{#unstyledContent}}{{{bodytext}}}{{/unstyledContent}}
+{{{secondaryactionshtml}}}
+{{#hasHistory}}{{#historyLink}}{{>history}}{{/historyLink}}{{/hasHistory}}
