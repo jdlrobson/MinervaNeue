@@ -40,9 +40,7 @@
 		"MinervaUI": "includes/ui/MinervaUI.php",
 		"MinervaNeue\\Hooks": "includes/Hooks.php",
 		"SkinMinervaNeue": "includes/skins/SkinMinervaNeue.php",
-		"MinervaNeueTemplate": "includes/skins/MinervaNeueTemplate.php",
-		"SkinMinervaNeueBeta": "includes/skins/SkinMinervaNeueBeta.php",
-		"MinervaNeueTemplateBeta": "includes/skins/MinervaNeueTemplateBeta.php"
+		"MinervaNeueTemplate": "includes/skins/MinervaNeueTemplate.php"
 	},
 	"ResourceModules": {
 		"skins.minerva.base.reset": {
