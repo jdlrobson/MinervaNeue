@@ -150,6 +150,18 @@
 				"anonymous": "resources/skins.minerva.icons.images.scripts/userAnonymous.svg"
 			}
 		},
+		"skins.minerva.loot": {
+			"targets": [
+				"mobile",
+				"desktop"
+			],
+			"dependencies": [
+				"jquery.throttle-debounce"
+			],
+			"scripts": [
+				"resources/skins.minerva.loot/index.js"
+			]
+		},
 		"skins.minerva.scripts": {
 			"targets": [
 				"mobile",

@@ -1027,6 +1027,7 @@ class SkinMinervaNeue extends SkinTemplate {
 		$modules['content'] = array();
 		$modules['legacy'] = array();
 
+		$modules['loot'] = array( 'skins.minerva.loot' );
 		// If MobileFrontend not defined there's no point in continuing as the scripts will not work.
 		if ( !defined( 'MOBILEFRONTEND' ) ) {
 			return $modules;
