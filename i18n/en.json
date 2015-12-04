@@ -5,5 +5,6 @@
 	"skinname-minerva-neue": "Minerva Neue",
 	"minerva-neue-skin-desc": "Minerva evolved, without the MobileFrontend",
 	"minerva-neue.css": "/* CSS placed here will affect users of the Minerva Neue skin */",
-	"minerva-neue.js": "/* Any JavaScript here will be loaded for users using the Minerva Neue skin */"
+	"minerva-neue.js": "/* Any JavaScript here will be loaded for users using the Minerva Neue skin */",
+	"minerva-logged-in-homepage-notification": "{{GENDER:$1|Welcome}}, $1!"
 }

@@ -31,7 +31,13 @@
 			"i18n"
 		]
 	},
+	"Hooks": {
+		"ResourceLoaderGetLessVars": "MinervaNeue\\Hooks::onResourceLoaderGetLessVars"
+	},
 	"AutoloadClasses": {
+		"MinervaResourceLoaderParsedMessageModule": "includes/resourceloader/MinervaResourceLoaderParsedMessageModule.php",
+		"models\\Page": "includes/models/Page.php",
+		"MinervaUI": "includes/ui/MinervaUI.php",
 		"MinervaNeue\\Hooks": "includes/Hooks.php",
 		"SkinMinervaNeue": "includes/skins/SkinMinervaNeue.php",
 		"MinervaNeueTemplate": "includes/skins/MinervaNeueTemplate.php",
@@ -198,7 +204,7 @@
 			]
 		},
 		"skins.minerva.editor": {
-			"class": "MFResourceLoaderParsedMessageModule",
+			"class": "MinervaResourceLoaderParsedMessageModule",
 			"dependencies": [
 				"skins.minerva.icons.images.scripts",
 				"skins.minerva.scripts",
@@ -275,7 +281,6 @@
 			]
 		},
 		"skins.minerva.toggling": {
-			"class": "MFResourceLoaderParsedMessageModule",
 			"dependencies": [
 				"mobile.toggle",
 				"skins.minerva.scripts"
@@ -365,6 +370,10 @@
 		}
 	},
 	"config": {
+		"MFContentNamespace": 0,
+		"MFDeviceWidthMobileSmall": 240,
+		"MFDeviceWidthTablet": 900,
+		"MinervaPageActions": [ "edit", "talk", "upload", "watch" ]
 	},
 	"manifest_version": 1
 }

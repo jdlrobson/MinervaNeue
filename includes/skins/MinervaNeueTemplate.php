@@ -33,7 +33,7 @@ class MinervaNeueTemplate extends BaseTemplate {
 			$this->makeSearchButton(
 				'fulltext',
 				array(
-					'class' => MobileUI::buttonClass( 'progressive', 'fulltext-search no-js-only' ),
+					'class' => MinervaUI::buttonClass( 'progressive', 'fulltext-search no-js-only' ),
 				)
 			) .
 			Html::closeElement( 'form' );
@@ -148,7 +148,7 @@ class MinervaNeueTemplate extends BaseTemplate {
 	 * @return string
 	 */
 	protected function getSecondaryActionsHtml() {
-		$baseClass = MobileUI::buttonClass( '', 'button' );
+		$baseClass = MinervaUI::buttonClass( '', 'button' );
 		$html = Html::openElement( 'div', array(
 			'class' => 'post-content',
 			'id' => 'page-secondary-actions'

@@ -2,6 +2,7 @@
 /**
  * SkinZeus.php
  */
+use models\Page;
 
 /**
  * Minerva: Born from the godhead of Jupiter with weapons!
@@ -25,12 +26,12 @@ class SkinMinervaNeue extends SkinTemplate {
 	protected $mobileContext;
 
 	/**
-	 * Wrapper for MobileContext::getMFConfig()
-	 * @see MobileContext::getMFConfig()
+	 * Wrapper for MobileContext::getSkinConfig()
+	 * @see MobileContext::getSkinConfig()
 	 * @return Config
 	 */
-	public function getMFConfig() {
-		return $this->mobileContext->getMFConfig();
+	public function getSkinConfig() {
+		return $this->skinConfig;
 	}
 
 	/**
@@ -147,7 +148,7 @@ class SkinMinervaNeue extends SkinTemplate {
 		$title = $this->getTitle();
 		// All actions disabled on main apge.
 		if ( !$title->isMainPage() &&
-			in_array( $action, $this->getMFConfig()->get( 'MFPageActions' ) ) ) {
+			in_array( $action, $this->getSkinConfig()->get( 'MinervaPageActions' ) ) ) {
 			return true;
 		} else {
 			return false;
@@ -173,7 +174,7 @@ class SkinMinervaNeue extends SkinTemplate {
 				'data-section' => $section,
 				// Note visibility of the edit section link button is controlled by .edit-page in ui.less so
 				// we default to enabled even though this may not be true.
-				'class' => MobileUI::iconClass( 'edit-enabled', 'element', 'edit-page icon-32px' ),
+				'class' => MinervaUI::iconClass( 'edit-enabled', 'element', 'edit-page icon-32px' ),
 			), $message );
 			$html .= Html::closeElement( 'span' );
 			return $html;
@@ -220,8 +221,13 @@ class SkinMinervaNeue extends SkinTemplate {
 	 * Initiate class
 	 */
 	public function __construct() {
+		$this->skinConfig = $this->getContext()->getConfig();
+	}
+
+	public function enableMobileVersion( MobileContext $context ) {
+		$this->isMobileMode = true;
 		$this->mobileContext = MobileContext::singleton();
-		$this->isMobileMode = $this->mobileContext->shouldDisplayMobileView();
+		$this->skinConfig = $this->mobileContext->getConfig();
 	}
 
 	/**
@@ -255,7 +261,7 @@ class SkinMinervaNeue extends SkinTemplate {
 		return Html::openElement( 'a', array(
 				'title' => $title,
 				'href' => $url,
-				'class' => MobileUI::iconClass( 'notifications', 'element',
+				'class' => MinervaUI::iconClass( 'notifications', 'element',
 					'user-button main-header-button icon-32px' ),
 				'id' => 'secondary-button',
 			) ) .
@@ -348,7 +354,8 @@ class SkinMinervaNeue extends SkinTemplate {
 		// Watchlist link
 		$watchlistQuery = array();
 		$user = $this->getUser();
-		if ( $user ) {
+		// MobileS
+		if ( $user && $this->mobileContext ) {
 			$view = $user->getOption( SpecialMobileWatchlist::VIEW_OPTION_NAME, false );
 			$filter = $user->getOption( SpecialMobileWatchlist::FILTER_OPTION_NAME, false );
 			if ( $view ) {
@@ -368,7 +375,7 @@ class SkinMinervaNeue extends SkinTemplate {
 						'mobile-frontend-watchlist-purpose',
 						$watchlistQuery
 					),
-					'class' => MobileUI::iconClass( 'watchlist', 'before' ),
+					'class' => MinervaUI::iconClass( 'watchlist', 'before' ),
 					'data-event-name' => 'watchlist',
 				),
 			),
@@ -389,7 +396,7 @@ class SkinMinervaNeue extends SkinTemplate {
 								$donateTitle,
 								'mobile-frontend-donate-image-anon'
 							),
-							'class' => MobileUI::iconClass( 'uploads', 'before', 'menu-item-upload' ),
+							'class' => MinervaUI::iconClass( 'uploads', 'before', 'menu-item-upload' ),
 							'data-event-name' => 'uploads',
 						),
 					),
@@ -405,7 +412,7 @@ class SkinMinervaNeue extends SkinTemplate {
 						'text' => wfMessage( 'mobile-frontend-main-menu-settings' )->escaped(),
 						'href' => SpecialPage::getTitleFor( 'MobileOptions' )->
 							getLocalUrl( array( 'returnto' => $returnToTitle ) ),
-						'class' => MobileUI::iconClass( 'mobileoptions', 'before' ),
+						'class' => MinervaUI::iconClass( 'mobileoptions', 'before' ),
 						'data-event-name' => 'settings',
 					),
 				),
@@ -424,7 +431,7 @@ class SkinMinervaNeue extends SkinTemplate {
 							SpecialPage::getTitleFor( 'Preferences' ),
 							'prefsnologintext2'
 						),
-						'class' => MobileUI::iconClass( 'settings', 'before' ),
+						'class' => MinervaUI::iconClass( 'settings', 'before' ),
 						'data-event-name' => 'preferences',
 					),
 				),
@@ -466,7 +473,7 @@ class SkinMinervaNeue extends SkinTemplate {
 	 * @return array
 	 */
 	protected function getDiscoveryTools() {
-		$config = $this->getMFConfig();
+		$config = $this->getSkinConfig();
 		$items = array();
 
 		// Home link
@@ -476,7 +483,7 @@ class SkinMinervaNeue extends SkinTemplate {
 				array(
 					'text' => wfMessage( 'mobile-frontend-home-button' )->escaped(),
 					'href' => Title::newMainPage()->getLocalUrl(),
-					'class' => MobileUI::iconClass( 'home', 'before' ),
+					'class' => MinervaUI::iconClass( 'home', 'before' ),
 					'data-event-name' => 'home',
 				),
 			),
@@ -491,7 +498,7 @@ class SkinMinervaNeue extends SkinTemplate {
 					'href' => SpecialPage::getTitleFor( 'Randompage',
 						MWNamespace::getCanonicalName( $config->get( 'MFContentNamespace' ) ) )->getLocalUrl() .
 							'#/random',
-					'class' => MobileUI::iconClass( 'random', 'before' ),
+					'class' => MinervaUI::iconClass( 'random', 'before' ),
 					'id' => 'randomButton',
 					'data-event-name' => 'random',
 				),
@@ -509,7 +516,7 @@ class SkinMinervaNeue extends SkinTemplate {
 					array(
 						'text' => wfMessage( 'mobile-frontend-main-menu-nearby' )->escaped(),
 						'href' => SpecialPage::getTitleFor( 'Nearby' )->getLocalURL(),
-						'class' => MobileUI::iconClass( 'nearby', 'before', 'nearby' ),
+						'class' => MinervaUI::iconClass( 'nearby', 'before', 'nearby' ),
 						'data-event-name' => 'nearby',
 					),
 				),
@@ -568,7 +575,9 @@ class SkinMinervaNeue extends SkinTemplate {
 				$query[ 'returntoquery' ] = wfArrayToCgi( $returntoquery );
 			}
 			$url = SpecialPage::getTitleFor( 'Userlogout' )->getFullURL( $query );
-			$url = $this->mobileContext->getMobileUrl( $url, $this->getConfig()->get( 'SecureLogin' ) );
+			if ( $this->mobileContext ) {
+				$url = $this->mobileContext->getMobileUrl( $url, $this->getConfig()->get( 'SecureLogin' ) );
+			}
 			$username = $user->getName();
 
 			$loginLogoutLink = array(
@@ -577,13 +586,13 @@ class SkinMinervaNeue extends SkinTemplate {
 					array(
 						'text' => $username,
 						'href' => SpecialPage::getTitleFor( 'UserProfile', $username )->getLocalUrl(),
-						'class' => MobileUI::iconClass( 'profile', 'before', 'truncated-text primary-action' ),
+						'class' => MinervaUI::iconClass( 'profile', 'before', 'truncated-text primary-action' ),
 						'data-event-name' => 'profile',
 					),
 					array(
 						'text' => wfMessage( 'mobile-frontend-main-menu-logout' )->escaped(),
 						'href' => $url,
-						'class' => MobileUI::iconClass(
+						'class' => MinervaUI::iconClass(
 							'secondary-logout', 'element', 'secondary-action truncated-text' ),
 						'data-event-name' => 'logout',
 					),
@@ -603,7 +612,7 @@ class SkinMinervaNeue extends SkinTemplate {
 					array(
 						'text' => wfMessage( 'mobile-frontend-main-menu-login' )->escaped(),
 						'href' => $url,
-						'class' => MobileUI::iconClass( 'anonymous-white', 'before' ),
+						'class' => MinervaUI::iconClass( 'anonymous-white', 'before' ),
 						'data-event-name' => 'login',
 					),
 				),
@@ -624,7 +633,7 @@ class SkinMinervaNeue extends SkinTemplate {
 	protected function getHistoryLink( Title $title ) {
 		$user = $this->getUser();
 		$isMainPage = $title->isMainPage();
-		$mp = new MobilePage( $this->getTitle(), false );
+		$mp = new Page( $this->getTitle(), false );
 		$timestamp = $mp->getLatestTimestamp();
 		// Main pages tend to include transclusions (see bug 51924)
 		if ( $isMainPage ) {
@@ -636,7 +645,10 @@ class SkinMinervaNeue extends SkinTemplate {
 				$this->getLanguage()->userTime( $timestamp, $user )
 			)->parse();
 		}
-		$historyUrl = $this->mobileContext->getMobileUrl( $title->getFullURL( 'action=history' ) );
+		$historyUrl = $title->getFullURL( 'action=history' );
+		if ( $this->mobileContext ) {
+			$historyUrl = $this->mobileContext->getMobileUrl( $historyUrl );
+		}
 		$edit = $mp->getLatestEdit();
 		$link = array(
 			'data-timestamp' => $isMainPage ? '' : $edit['timestamp'],
@@ -671,7 +683,7 @@ class SkinMinervaNeue extends SkinTemplate {
 		if ( $title->isMainPage() ) {
 			if ( $user->isLoggedIn() ) {
 				$pageTitle = wfMessage(
-					'mobile-frontend-logged-in-homepage-notification', $user->getName() )->text();
+					'minerva-logged-in-homepage-notification', $user->getName() )->text();
 			} else {
 				$pageTitle = '';
 			}
@@ -703,7 +715,7 @@ class SkinMinervaNeue extends SkinTemplate {
 			Html::element( 'a', array(
 				'title' => $this->msg( 'mobile-frontend-main-menu-button-tooltip' ),
 				'href' => $url,
-				'class' => MobileUI::iconClass( 'mainmenu', 'element', 'main-menu-button' ),
+				'class' => MinervaUI::iconClass( 'mainmenu', 'element', 'main-menu-button' ),
 				'id'=> 'mw-mf-main-menu-button',
 			), $this->msg( 'mobile-frontend-main-menu-button-tooltip' ) )
 		);
@@ -718,7 +730,7 @@ class SkinMinervaNeue extends SkinTemplate {
 	protected function prepareBanners( BaseTemplate $tpl ) {
 		// Make sure Zero banner are always on top
 		$banners = array( '<div id="siteNotice"></div>' );
-		if ( $this->getMFConfig()->get( 'MFEnableSiteNotice' ) ) {
+		if ( $this->getSkinConfig()->get( 'MFEnableSiteNotice' ) ) {
 			$siteNotice = $this->getSiteNotice();
 			if ( $siteNotice ) {
 				$banners[] = $siteNotice;
@@ -785,7 +797,7 @@ class SkinMinervaNeue extends SkinTemplate {
 		$out = $this->getOutput();
 		if ( $out->getRequest()->getText( 'oldid' ) ) {
 			$tpl->set( '_old_revision_warning',
-				MobileUI::warningBox( $this->getOldRevisionHtml() ) );
+				MinervaUI::warningBox( $this->getOldRevisionHtml() ) );
 		}
 	}
 
@@ -846,14 +858,14 @@ class SkinMinervaNeue extends SkinTemplate {
 		if ( $this->isAllowedPageAction( 'edit' ) ) {
 			$menu['edit'] = array( 'id' => 'ca-edit', 'text' => '',
 				'itemtitle' => $this->msg( 'mobile-frontend-pageaction-edit-tooltip' ),
-				'class' => MobileUI::iconClass( 'edit', 'element', 'hidden' ),
+				'class' => MinervaUI::iconClass( 'edit', 'element', 'hidden' ),
 			);
 		}
 
 		if ( $this->isAllowedPageAction( 'watch' ) ) {
 			$watchTemplate = array(
 				'id' => 'ca-watch',
-				'class' => MobileUI::iconClass( 'watch', 'element',
+				'class' => MinervaUI::iconClass( 'watch', 'element',
 					'icon-32px watch-this-article hidden' ),
 			);
 			// standardise watch article into one menu item
@@ -908,19 +920,15 @@ class SkinMinervaNeue extends SkinTemplate {
 	public function getSkinConfigVariables() {
 		$title = $this->getTitle();
 		$user = $this->getUser();
-		$config = $this->getMFConfig();
+		$config = $this->getSkinConfig();
 		$out = $this->getOutput();
 
 		$vars = array(
 			'wgMFMenuData' => $this->getMenuData(),
-			'wgMFEnableJSConsoleRecruitment' => $config->get( 'MFEnableJSConsoleRecruitment' ),
-			'wgMFUseCentralAuthToken' => $config->get( 'MFUseCentralAuthToken' ),
-			'wgMFPhotoUploadEndpoint' =>
-				$config->get( 'MFPhotoUploadEndpoint' ) ? $config->get( 'MFPhotoUploadEndpoint' ) : '',
 			'wgPreferredVariant' => $title->getPageLanguage()->getPreferredVariant(),
+			'wgMFDeviceWidthMobileSmall' => $config->get( 'MFDeviceWidthMobileSmall' ),
 			'wgMFDeviceWidthTablet' => $config->get( 'MFDeviceWidthTablet' ),
 			'wgMFMode' => $this->getMode(),
-			'wgMFCollapseSectionsByDefault' => $config->get( 'MFCollapseSectionsByDefault' ),
 			'wgMFTocEnabled' => $this->getOutput()->getProperty( 'MinervaTOC' )
 		);
 
