@@ -6,6 +6,7 @@ namespace models;
 use Title;
 use PageImages;
 use Revision;
+use User;
 
 /**
  * Retrieves information specific to a mobile page
