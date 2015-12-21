@@ -1,6 +1,6 @@
 <?php
 /**
- * SkinZeus.php
+ * SkinMinerva.php
  */
 use models\Page;
 
